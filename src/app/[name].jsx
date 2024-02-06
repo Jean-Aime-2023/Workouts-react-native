@@ -1,7 +1,6 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet ,ScrollView } from 'react-native';
 import exercises from '../../assets/data/exercises.json';
 import { Stack, useLocalSearchParams } from 'expo-router';
-
 
 export default function ExerciseDetailsScreen() {
   const params = useLocalSearchParams();
@@ -13,38 +12,35 @@ export default function ExerciseDetailsScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen options={{title:'Hello'}} />
-      <Text style={styles.exerciseName}>{exercise.name}</Text>
-      <Text style={styles.exerciseSubtitle}>
-        <Text style={styles.subValue}>{exercise.muscle}</Text> |{' '}
-        <Text style={styles.subValue}>{exercise.equipment}</Text>
-      </Text>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ title: exercise.name }} />
+
+      <View style={styles.panel}>
+        <Text style={styles.exerciseName}>{exercise.name}</Text>
+        <Text style={styles.exerciseSubtitle}>
+          <Text style={styles.subValue}>{exercise.muscle}</Text> |{' '}
+          <Text style={styles.subValue}>{exercise.equipment}</Text>
+        </Text>
+      </View>
+
+      <View style={styles.panel}>
+        <Text style={styles.instructions}>{exercise.instructions}</Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-    container:{
-     padding:10,
-    },
-  exerciseContainer: {
-    backgroundColor: '#fff',
+  container: {
     padding: 10,
-    borderRadius: 10,
-    gap: 5,
-    marginHorizontal: 2,
-    marginTop: 4,
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
-    elevation: 2,
+    display:'flex',
+    flexDirection:'column',
+    gap:10,  
+  },
+  panel: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 5,
   },
   exerciseName: {
     fontSize: 20,
@@ -55,5 +51,9 @@ const styles = StyleSheet.create({
   },
   subValue: {
     textTransform: 'capitalize',
+  },
+  instructions: {
+    fontSize: 16,
+    lineHeight: 20,
   },
 });
